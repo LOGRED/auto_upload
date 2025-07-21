@@ -21,9 +21,13 @@ watcher.on('change', async (path) => {
             const form = new FormData();
             form.append('file', fs.createReadStream(path));
             const response = await axios.post('https://dev.vision21tech.com/api/upload', form)
-            console.log('서버로 성공적으로 데이터를 보냈습니다');
+            if (response.status === 200) {
+                console.log('서버로 성공적으로 데이터를 보냈습니다');
+            } else {
+                console.log('서버 응답 오류:', response.status);
+            }
         } catch (err) {
-            console.log(err);
+            console.log("서버에 전송을 실패했습니다");
         }
     }
 });
